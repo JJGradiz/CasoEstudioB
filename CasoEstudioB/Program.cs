@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 
+//El usuario puede ver, buscar, agregar, eliminar y filtrar cursos de forma más organizada, 
+//con validaciones y mensajes visuales claros que mejoran la interacción general.
+
 namespace CasoEstudioB
 {
     class Curso
