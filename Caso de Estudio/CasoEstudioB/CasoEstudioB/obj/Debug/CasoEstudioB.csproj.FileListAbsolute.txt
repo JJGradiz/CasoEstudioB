@@ -1,0 +1,8 @@
+C:\Caso de Estudio\CasoEstudioB\CasoEstudioB\bin\Debug\CasoEstudioB.exe.config
+C:\Caso de Estudio\CasoEstudioB\CasoEstudioB\bin\Debug\CasoEstudioB.exe
+C:\Caso de Estudio\CasoEstudioB\CasoEstudioB\bin\Debug\CasoEstudioB.pdb
+C:\Caso de Estudio\CasoEstudioB\CasoEstudioB\obj\Debug\CasoEstudioB.csproj.AssemblyReference.cache
+C:\Caso de Estudio\CasoEstudioB\CasoEstudioB\obj\Debug\CasoEstudioB.csproj.CoreCompileInputs.cache
+C:\Caso de Estudio\CasoEstudioB\CasoEstudioB\obj\Debug\CasoEstudioB.exe
+C:\Caso de Estudio\CasoEstudioB\CasoEstudioB\obj\Debug\CasoEstudioB.pdb
+C:\Caso de Estudio\CasoEstudioB\CasoEstudioB\obj\Debug\CasoEstudioB.exe.config
