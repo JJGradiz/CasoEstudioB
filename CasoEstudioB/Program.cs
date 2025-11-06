@@ -44,23 +44,30 @@ namespace CasoEstudioB
 
             while (continuar)
             {
-                Console.WriteLine("\n--- MENÚ ---");
+                Console.Clear();
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine("--- MENÚ ---");
+                Console.ResetColor();
+
                 Console.WriteLine("1. Ver lista de cursos");
                 Console.WriteLine("2. Buscar curso por ID");
                 Console.WriteLine("3. Ver cursos seleccionados");
-                Console.WriteLine("4. Salir");
-                Console.Write("Elige una opción: ");
+                Console.WriteLine("4. Eliminar curso seleccionado");
+                Console.WriteLine("5. Filtrar cursos por área");
+                Console.WriteLine("6. Agregar nuevo curso");
+                Console.WriteLine("7. Salir");
+                Console.Write("\nElige una opción: ");
 
                 string opcion = Console.ReadLine();
-
                 Console.WriteLine();
 
                 switch (opcion)
                 {
+                    // VER CURSOS
                     case "1":
                         Console.WriteLine("Lista de cursos:");
                         foreach (var c in cursos)
-                            Console.WriteLine(c);  // Ya incluye el ID en ToString()
+                            Console.WriteLine(c);
 
                         Console.Write("\n¿Deseas seleccionar alguno? (id / no): ");
                         string sel = Console.ReadLine();
@@ -70,14 +77,28 @@ namespace CasoEstudioB
                             var cursoSel = cursos.FirstOrDefault(c => c.Id == idSel);
                             if (cursoSel != null)
                             {
-                                cursosSeleccionados.Add(cursoSel);
-                                Console.WriteLine("Curso agregado.");
+                                if (cursosSeleccionados.Contains(cursoSel))
+                                {
+                                    Console.ForegroundColor = ConsoleColor.Yellow;
+                                    Console.WriteLine("Ya has seleccionado este curso.");
+                                    Console.ResetColor();
+                                }
+                                else
+                                {
+                                    cursosSeleccionados.Add(cursoSel);
+                                    Console.ForegroundColor = ConsoleColor.Green;
+                                    Console.WriteLine("Curso agregado exitosamente.");
+                                    Console.ResetColor();
+                                }
                             }
                             else
+                            {
                                 Console.WriteLine("ID no válido.");
+                            }
                         }
                         break;
 
+                    // BUSCAR POR ID
                     case "2":
                         Console.Write("Ingresa el ID del curso: ");
                         string inputId = Console.ReadLine();
@@ -100,8 +121,17 @@ namespace CasoEstudioB
 
                                 if (resp == "si")
                                 {
-                                    cursosSeleccionados.Add(cursoEncontrado);
-                                    Console.WriteLine("Curso agregado.");
+                                    if (cursosSeleccionados.Contains(cursoEncontrado))
+                                    {
+                                        Console.WriteLine("Ya lo has agregado antes.");
+                                    }
+                                    else
+                                    {
+                                        cursosSeleccionados.Add(cursoEncontrado);
+                                        Console.ForegroundColor = ConsoleColor.Green;
+                                        Console.WriteLine("Curso agregado exitosamente.");
+                                        Console.ResetColor();
+                                    }
                                 }
                             }
                         }
@@ -109,9 +139,9 @@ namespace CasoEstudioB
                         {
                             Console.WriteLine("ID inválido.");
                         }
-
                         break;
 
+                    // VER SELECCIONADOS
                     case "3":
                         Console.WriteLine("Cursos seleccionados:");
                         if (cursosSeleccionados.Count == 0)
@@ -121,7 +151,62 @@ namespace CasoEstudioB
                                 Console.WriteLine(c);
                         break;
 
+                    // ELIMINAR CURSO
                     case "4":
+                        Console.Write("Ingresa el ID del curso a eliminar: ");
+                        if (int.TryParse(Console.ReadLine(), out int idEliminar))
+                        {
+                            var cursoEliminar = cursosSeleccionados.FirstOrDefault(c => c.Id == idEliminar);
+                            if (cursoEliminar != null)
+                            {
+                                cursosSeleccionados.Remove(cursoEliminar);
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine("Curso eliminado de la lista.");
+                                Console.ResetColor();
+                            }
+                            else
+                            {
+                                Console.WriteLine("No se encontró ese curso en tus seleccionados.");
+                            }
+                        }
+                        break;
+
+                    // FILTRAR POR ÁREA
+                    case "5":
+                        Console.Write("Ingresa el área a filtrar: ");
+                        string area = Console.ReadLine();
+                        var filtrados = cursos
+                            .Where(c => c.Area.Equals(area, StringComparison.OrdinalIgnoreCase))
+                            .ToList();
+
+                        if (filtrados.Count == 0)
+                        {
+                            Console.WriteLine("No hay cursos en esa área.");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Cursos encontrados:");
+                            foreach (var c in filtrados)
+                                Console.WriteLine(c);
+                        }
+                        break;
+
+                    // AGREGAR NUEVO CURSO
+                    case "6":
+                        Console.Write("Nombre del nuevo curso: ");
+                        string nuevoNombre = Console.ReadLine();
+                        Console.Write("Área del curso: ");
+                        string nuevaArea = Console.ReadLine();
+                        int nuevoId = cursos.Max(c => c.Id) + 1;
+
+                        cursos.Add(new Curso(nuevoId, nuevoNombre, nuevaArea));
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine("Curso agregado exitosamente.");
+                        Console.ResetColor();
+                        break;
+
+                    // SALIR
+                    case "7":
                         continuar = false;
                         Console.WriteLine("Saliendo...");
                         break;
@@ -130,6 +215,9 @@ namespace CasoEstudioB
                         Console.WriteLine("Opción inválida.");
                         break;
                 }
+
+                Console.WriteLine("\nPresiona una tecla para continuar...");
+                Console.ReadKey();
             }
         }
     }
