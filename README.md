@@ -251,10 +251,10 @@ La aplicación ejecuta un bucle while continuo Program.cs:45 que:
 4. Ejecuta la operación correspondiente mediante switch Program.cs:64
 5. Espera una tecla antes de continuar Program.cs:219-220
 
-##Características Técnicas
+## Características Técnicas
 1. Validación de entrada: Uso de int.TryParse para validar IDs numéricos
 2. LINQ: Consultas con FirstOrDefault, Where, Max, Contains
 3. Inmutabilidad: Propiedades de Curso son de solo lectura
 4. Feedback visual: Mensajes con colores (Verde para éxito, Rojo para eliminación, Amarillo para advertencias)
 
-###Fin
+### Fin
