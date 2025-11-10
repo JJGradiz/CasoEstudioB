@@ -191,7 +191,7 @@ namespace CasoEstudioB
                         }
                         break;
 
-                    // AGREGAR NUEVO CURSO
+                    // AGREGAR UN CURSO ADICIONAL
                     case "6":
                         Console.Write("Nombre del nuevo curso: ");
                         string nuevoNombre = Console.ReadLine();
