@@ -148,10 +148,10 @@ namespace CasoEstudioB
 
                     // ELIMINAR CURSO
                     case "4":
-                        Ui.Subtitle("Eliminar curso seleccionado");
+                        Ui.Subtitle("Eliminar curso seleccionado"); //ui es la interfaz de usuario
                         if (cursosSeleccionados.Count == 0)
                         {
-                            Ui.Info("No tienes cursos seleccionados aún.");
+                            Ui.Info("No tienes cursos seleccionados aún."); // Validación de lista vacía
                             Ui.Pause();
                             break;
                         }
@@ -329,7 +329,7 @@ namespace CasoEstudioB
             Console.ReadKey(true);
         }
 
-        public static string ReadNonEmpty(string prompt)
+        public static string ReadNonEmpty(string prompt) // Lee una línea no vacía desde la consola
         {
             while (true)
             {
@@ -342,14 +342,14 @@ namespace CasoEstudioB
             }
         }
 
-        public static string ReadLineOrEmpty(string prompt)
+        public static string ReadLineOrEmpty(string prompt) // Lee una línea que puede estar vacía
         {
             Console.Write($"{prompt}: ");
             var input = Console.ReadLine();
-            return input == null ? string.Empty : input.Trim();
+            return input == null ? string.Empty : input.Trim(); // devuelve cadena vacía si es nulo
         }
 
-        public static int ReadInt(string prompt, int? min = null, int? max = null)
+        public static int ReadInt(string prompt, int? min = null, int? max = null) // Lee un entero con validaciones opcionales de rango
         {
             while (true)
             {
@@ -378,13 +378,13 @@ namespace CasoEstudioB
             }
         }
 
-        public static string ReadOption(string prompt, IEnumerable<string> allowed)
+        public static string ReadOption(string prompt, IEnumerable<string> allowed) // Lee una opción de un conjunto permitido
         {
-            var set = new HashSet<string>(allowed);
+            var set = new HashSet<string>(allowed);// conjunto para búsqueda rápida
             while (true)
             {
                 Console.Write($"{prompt}: ");
-                var input = (Console.ReadLine() ?? string.Empty).Trim();
+                var input = (Console.ReadLine() ?? string.Empty).Trim(); // leer y limpiar entrada
                 if (set.Contains(input))
                     return input;
 
@@ -392,7 +392,7 @@ namespace CasoEstudioB
             }
         }
 
-        public static bool Confirm(string prompt)
+        public static bool Confirm(string prompt) 
         {
             while (true)
             {
@@ -407,11 +407,11 @@ namespace CasoEstudioB
             }
         }
 
-        public static void PrintTable(string[] headers, IEnumerable<string[]> rows)
+        public static void PrintTable(string[] headers, IEnumerable<string[]> rows) //Imprime una tabla en la consola
         {
             // Calcular anchos
-            var lista = rows?.ToList() ?? new List<string[]>();
-            var cols = headers.Length;
+            var lista = rows?.ToList() ?? new List<string[]>(); // convertir a lista para múltiples recorridos
+            var cols = headers.Length; // número de columnas basado en encabezados
             var widths = new int[cols];
 
             for (int i = 0; i < cols; i++)
@@ -424,44 +424,45 @@ namespace CasoEstudioB
             }
 
             // Dibujar
-            DrawSeparator(widths);
-            DrawRow(headers, widths, isHeader: true);
-            DrawSeparator(widths);
-            foreach (var r in lista)
-                DrawRow(r, widths, isHeader: false);
-            DrawSeparator(widths);
+            DrawSeparator(widths); // línea superior
+            DrawRow(headers, widths, isHeader: true); // encabezados
+            DrawSeparator(widths); // línea después de encabezados
+            foreach (var r in lista) // filas de datos
+                DrawRow(r, widths, isHeader: false); // fila normal
+            DrawSeparator(widths); // línea inferior
         }
 
-        static void DrawSeparator(int[] widths)
+        static void DrawSeparator(int[] widths) // Dibuja una línea separadora de la tabla
         {
             Console.ForegroundColor = ConsoleColor.DarkGray;
-            Console.Write('+');
-            for (int i = 0; i < widths.Length; i++)
+            Console.Write('+'); // inicio de línea para la tabla
+            for (int i = 0; i < widths.Length; i++) // cada columna
             {
-                Console.Write(new string('─', widths[i] + 2));
-                Console.Write('+');
+                Console.Write(new string('─', widths[i] + 2)); // línea horizontal con padding
+                Console.Write('+');// separador de columna
             }
             Console.WriteLine();
             Console.ResetColor();
         }
 
-        static void DrawRow(string[] row, int[] widths, bool isHeader)
+        static void DrawRow(string[] row, int[] widths, bool isHeader) // Dibuja una fila de la tabla
         {
-            Console.Write('|');
-            for (int i = 0; i < widths.Length; i++)
+            Console.Write('|'); // inicio de fila para la tabla
+            for (int i = 0; i < widths.Length; i++) // cada columna
             {
-                var cell = i < row.Length ? (row[i] ?? string.Empty) : string.Empty;
-                if (isHeader) Console.ForegroundColor = ConsoleColor.White;
-                Console.Write(" " + cell.PadRight(widths[i]) + " ");
+                var cell = i < row.Length ? (row[i] ?? string.Empty) : string.Empty; // obtener el contenido de la celda
+                if (isHeader) Console.ForegroundColor = ConsoleColor.White; // color para encabezado
+                else Console.ForegroundColor = ConsoleColor.Gray; // color para filas normales
+                Console.Write(" " + cell.PadRight(widths[i]) + " "); // escribir la celda con padding
                 Console.ResetColor();
-                Console.Write('|');
+                Console.Write('|'); // separador de columna
             }
             Console.WriteLine();
         }
 
-        static void Line(char ch, int count)
+        static void Line(char ch, int count) // Dibuja una línea de caracteres
         {
-            Console.WriteLine(new string(ch, Math.Max(1, count)));
+            Console.WriteLine(new string(ch, Math.Max(1, count))); // asegura al menos 1 carácter para la línea
         }
     }
 }
